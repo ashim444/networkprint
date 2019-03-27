@@ -1,35 +1,34 @@
 package com.example.ashimghimire.network;
 
-import com.example.ashimghimire.network.model.Lunches;
+import com.example.ashimghimire.network.model.Launch;
 
 import java.util.List;
-
 public class Repository {
-    private List<Lunches> repositoryLunchesList;
+    private List<Launch> repositoryLaunchList;
     //TODO: CREATING DATABASE AND CALLING OBJECT IN DATABASE FIRST AND DISPLAYING IT
 
 //    public Repository() {
-//        Call<List<Lunches>> lunches = LunchesApiRepository.getLunchesApi().getLunches();
-//        lunches.enqueue(new Callback<List<Lunches>>() {
+//        Call<List<Launch>> lunches = LaunchApiRepository.getLaunchApi().getLunches();
+//        lunches.enqueue(new Callback<List<Launch>>() {
 //            @Override
-//            public void onResponse(Call<List<Lunches>> call, Response<List<Lunches>> response) {
+//            public void onResponse(Call<List<Launch>> call, Response<List<Launch>> response) {
 //                if (!response.isSuccessful()) {
 //                    return;
 //                }
 //                setRepositoryLunchesList(response.body());
 //            }
 //            @Override
-//            public void onFailure(Call<List<Lunches>> call, Throwable t) {
+//            public void onFailure(Call<List<Launch>> call, Throwable t) {
 //
 //            }
 //        });
 //    }
 //
-//    public void setRepositoryLunchesList(List<Lunches> repositoryLunchesList) {
-//        this.repositoryLunchesList = repositoryLunchesList;
+//    public void setRepositoryLunchesList(List<Launch> repositoryLaunchList) {
+//        this.repositoryLaunchList = repositoryLaunchList;
 //    }
 //
-//    public List<Lunches> getRepositoryLunchesList() {
-//        return repositoryLunchesList;
+//    public List<Launch> getRepositoryLunchesList() {
+//        return repositoryLaunchList;
 //    }
 }

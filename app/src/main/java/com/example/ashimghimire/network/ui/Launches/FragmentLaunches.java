@@ -1,4 +1,4 @@
-package com.example.ashimghimire.network.UI;
+package com.example.ashimghimire.network.ui.Launches;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,11 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ashimghimire.network.InteractionListener;
-import com.example.ashimghimire.network.adapter.LunchesAdapter;
-import com.example.ashimghimire.network.LunchesApiRepository;
 import com.example.ashimghimire.network.R;
-import com.example.ashimghimire.network.model.Lunches;
+import com.example.ashimghimire.network.model.Launch;
+import com.example.ashimghimire.network.networking.LaunchApiRepository;
+import com.example.ashimghimire.network.ui.InteractionListener;
 
 import java.util.List;
 
@@ -23,13 +22,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentLunches extends Fragment {
+public class FragmentLaunches extends Fragment {
     InteractionListener listener;
-    public  static  List<Lunches> lunchesList;
+    public  static  List<Launch> launchList;
     private RecyclerView recyclerView;
 
-    public static FragmentLunches newInstance() {
-        return new FragmentLunches();
+    public static FragmentLaunches newInstance() {
+        return new FragmentLaunches();
     }
 
     @Override
@@ -40,7 +39,7 @@ public class FragmentLunches extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_lunches, container, false);
+        View v = inflater.inflate(R.layout.fragment_launches, container, false);
         return v;
     }
 
@@ -48,33 +47,32 @@ public class FragmentLunches extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         recyclerView = v.findViewById(R.id.lunches_recycler);
-
-        Call<List<Lunches>> lunches = LunchesApiRepository.getLunchesApi().getLunches();
-        lunches.enqueue(new Callback<List<Lunches>>() {
+        Call<List<Launch>> lunches = LaunchApiRepository.getLaunchApi().getLunches();
+        lunches.enqueue(new Callback<List<Launch>>() {
             @Override
-            public void onResponse(Call<List<Lunches>> call, Response<List<Lunches>> response) {
+            public void onResponse(Call<List<Launch>> call, Response<List<Launch>> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
                 generateLunchesList(response.body());
             }
             @Override
-            public void onFailure(Call<List<Lunches>> call, Throwable t) {
-
+            public void onFailure(Call<List<Launch>> call, Throwable t) {
+                //TODO couter failer case
             }
         });
-
     }
 
-    public void generateLunchesList(List<Lunches> list) {
-        lunchesList = list;
+    public void generateLunchesList(final List<Launch> list) {
+//        launchList = list;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        LunchesAdapter adapter = new LunchesAdapter(getContext(),list);
+        LaunchAdapter adapter = new LaunchAdapter(getContext());
+        adapter.setListLaunches(list);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new LunchesAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new LaunchAdapter.OnItemClickListener() {
             @Override
             public void getClickLunches(int position) {
-                listener.navigateToDetails(position);
+                listener.navigateToDetails(list.get(position).getLunchesFlightNumber());
             }
         });
     }

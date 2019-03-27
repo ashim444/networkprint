@@ -2,7 +2,7 @@ package com.example.ashimghimire.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Lunches {
+public class Launch {
 
     @SerializedName("flight_number")
     private int lunchesFlightNumber;
@@ -11,10 +11,10 @@ public class Lunches {
     private String lunchesMissionName;
 
     @SerializedName("links")
-    private LunchesImages lunchesImages;
+    private LaunchImages launchImages;
 
-    public LunchesImages getLunchesImages() {
-        return lunchesImages;
+    public LaunchImages getLaunchImages() {
+        return launchImages;
     }
 
     public int getLunchesFlightNumber() {
@@ -24,5 +24,4 @@ public class Lunches {
     public String getLunchesMissionName() {
         return lunchesMissionName;
     }
-
 }

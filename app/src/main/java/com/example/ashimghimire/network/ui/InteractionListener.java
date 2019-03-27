@@ -1,11 +1,9 @@
-package com.example.ashimghimire.network;
+package com.example.ashimghimire.network.ui;
 
 public interface InteractionListener {
-
-    void navigateToDetails(int positon);
+    void navigateToDetails(int flightNumber);
 
     void showDefaultFragment();
 
     void pop();
-
 }

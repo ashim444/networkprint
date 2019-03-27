@@ -1,4 +1,4 @@
-package com.example.ashimghimire.network.adapter;
+package com.example.ashimghimire.network.ui.Launches;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,48 +6,49 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.ashimghimire.network.R;
-import com.example.ashimghimire.network.UI.LunchesActivity;
-import com.example.ashimghimire.network.model.Lunches;
+import com.example.ashimghimire.network.model.Launch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LunchesAdapter extends RecyclerView.Adapter<LunchesAdapter.ViewHolder> {
+public class LaunchAdapter extends RecyclerView.Adapter<LaunchAdapter.ViewHolder> {
 
-    private List<Lunches> listLunches;
+    private List<Launch> listLaunches = new ArrayList<>();
     private Context context;
 
-
-    public LunchesAdapter(Context context, List<Lunches> listLunches) {
-        this.listLunches = listLunches;
+    public LaunchAdapter(Context context) {
         this.context = context;
-
-        }
-
-    @Override
-    public LunchesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_lunches, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LunchesAdapter.ViewHolder holder, int position) {
-        Lunches currentLunches = listLunches.get(holder.getAdapterPosition());
-        holder.flightId.setText(String.valueOf(currentLunches.getLunchesFlightNumber()));
-        holder.flightDetails.setText(currentLunches.getLunchesMissionName());
-        Glide.with(context).load(currentLunches.getLunchesImages().getLunchSmallImageUrl()).apply(LunchesActivity.option).into(holder.imageView);
+    public LaunchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_launches, parent, false));
+    }
 
+    @Override
+    public void onBindViewHolder(@NonNull LaunchAdapter.ViewHolder holder, int position) {
+        Launch currentLaunch = listLaunches.get(holder.getAdapterPosition());
+        holder.flightId.setText(String.valueOf(currentLaunch.getLunchesFlightNumber()));
+        holder.flightDetails.setText(currentLaunch.getLunchesMissionName());
+        Glide.with(context).load(currentLaunch.getLaunchImages().getLunchesSmallImageUrl()).placeholder(R.drawable.ic_launcher_background).into(holder.imageView);
+    }
+
+    public void setListLaunches(List<Launch> listLaunches) {
+        this.listLaunches = listLaunches;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return listLunches.size();
+        return listLaunches.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView flightId, flightDetails;
