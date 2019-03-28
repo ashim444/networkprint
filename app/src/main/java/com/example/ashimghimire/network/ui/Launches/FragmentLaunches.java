@@ -40,13 +40,14 @@ public class FragmentLaunches extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_launches, container, false);
+        recyclerView = v.findViewById(R.id.lunches_recycler);
         return v;
     }
 
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        recyclerView = v.findViewById(R.id.lunches_recycler);
+
         Call<List<Launch>> lunches = LaunchApiRepository.getLaunchApi().getLunches();
         lunches.enqueue(new Callback<List<Launch>>() {
             @Override
@@ -64,7 +65,7 @@ public class FragmentLaunches extends Fragment {
     }
 
     public void generateLunchesList(final List<Launch> list) {
-//        launchList = list;
+//      launchList = list;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         LaunchAdapter adapter = new LaunchAdapter(getContext());
         adapter.setListLaunches(list);

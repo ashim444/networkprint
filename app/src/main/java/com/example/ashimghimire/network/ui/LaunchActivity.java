@@ -22,7 +22,7 @@ public class LaunchActivity extends AppCompatActivity implements InteractionList
 
     @Override
     public void navigateToDetails(int flightNumber) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.lunches_fragment_container, FragmentLaunchInfo.newInstance(flightNumber)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.lunches_fragment_container, FragmentLaunchInfo.newInstance(flightNumber)).addToBackStack(null).commit();
     }
 
     @Override

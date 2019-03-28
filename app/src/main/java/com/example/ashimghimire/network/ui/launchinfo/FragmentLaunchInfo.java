@@ -1,5 +1,6 @@
 package com.example.ashimghimire.network.ui.launchinfo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.example.ashimghimire.network.R;
 import com.example.ashimghimire.network.model.Launch;
 import com.example.ashimghimire.network.networking.LaunchApiRepository;
+import com.example.ashimghimire.network.ui.InteractionListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,9 +22,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragmentLaunchInfo extends Fragment {
+    private InteractionListener interactionListener;
     public static final String LUNCHES_POSITION = "position";
     private ImageView lunchesImage;
-    TextView flightName, flightDetail;
+    private TextView flightName, flightDetail;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -31,16 +34,12 @@ public class FragmentLaunchInfo extends Fragment {
         lunchesImage = view.findViewById(R.id.lunches_info_big_image);
         flightName = view.findViewById(R.id.lunches_info_flight_num);
         flightDetail = view.findViewById(R.id.lunches_info_name);
-
         Call<Launch> call = LaunchApiRepository.getLaunchApi().getOneLaunch(i);
-
         call.enqueue(new Callback<Launch>() {
             @Override
             public void onResponse(Call<Launch> call, Response<Launch> response) {
-
                 generateLunchesList(response.body());
             }
-
             @Override
             public void onFailure(Call<Launch> call, Throwable t) {
                 flightName.setText("Fail");
@@ -65,5 +64,16 @@ public class FragmentLaunchInfo extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_launches_info, container, false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof InteractionListener) {
+            interactionListener = (InteractionListener) context;
+        } else {
+            throw new RuntimeException() {
+            };
+        }
     }
 }
