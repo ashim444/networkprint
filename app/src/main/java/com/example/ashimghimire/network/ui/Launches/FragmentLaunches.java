@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ashimghimire.network.R;
+import com.example.ashimghimire.network.databinding.FragmentLaunchesBinding;
 import com.example.ashimghimire.network.model.Launch;
 import com.example.ashimghimire.network.networking.LaunchApiRepository;
 import com.example.ashimghimire.network.ui.InteractionListener;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +26,7 @@ import retrofit2.Response;
 
 public class FragmentLaunches extends Fragment {
     InteractionListener listener;
-    public  static  List<Launch> launchList;
-    private RecyclerView recyclerView;
+    FragmentLaunchesBinding launchesBinding;
 
     public static FragmentLaunches newInstance() {
         return new FragmentLaunches();
@@ -39,9 +40,8 @@ public class FragmentLaunches extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_launches, container, false);
-        recyclerView = v.findViewById(R.id.lunches_recycler);
-        return v;
+        launchesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_launches, container, false);
+        return launchesBinding.getRoot();
     }
 
     @Override
@@ -57,6 +57,7 @@ public class FragmentLaunches extends Fragment {
                 }
                 generateLunchesList(response.body());
             }
+
             @Override
             public void onFailure(Call<List<Launch>> call, Throwable t) {
                 //TODO couter failer case
@@ -66,10 +67,10 @@ public class FragmentLaunches extends Fragment {
 
     public void generateLunchesList(final List<Launch> list) {
 //      launchList = list;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        launchesBinding.lunchesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         LaunchAdapter adapter = new LaunchAdapter(getContext());
         adapter.setListLaunches(list);
-        recyclerView.setAdapter(adapter);
+        launchesBinding.lunchesRecycler.setAdapter(adapter);
         adapter.setOnItemClickListener(new LaunchAdapter.OnItemClickListener() {
             @Override
             public void getClickLunches(int position) {

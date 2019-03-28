@@ -10,13 +10,11 @@ import com.example.ashimghimire.network.ui.Launches.FragmentLaunches;
 import com.example.ashimghimire.network.ui.launchinfo.FragmentLaunchInfo;
 
 public class LaunchActivity extends AppCompatActivity implements InteractionListener {
-    public static  RequestOptions option;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launches);
-        option = new RequestOptions().centerCrop().placeholder(R.drawable.ic_launcher_background).error(R.drawable.ic_launcher_background);
         showDefaultFragment();
     }
 

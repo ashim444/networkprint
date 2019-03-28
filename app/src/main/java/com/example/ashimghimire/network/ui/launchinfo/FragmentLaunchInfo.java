@@ -10,12 +10,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.ashimghimire.network.R;
+import com.example.ashimghimire.network.databinding.FragmentLaunchesBinding;
+import com.example.ashimghimire.network.databinding.FragmentLaunchesInfoBinding;
 import com.example.ashimghimire.network.model.Launch;
 import com.example.ashimghimire.network.networking.LaunchApiRepository;
 import com.example.ashimghimire.network.ui.InteractionListener;
+import com.example.ashimghimire.network.ui.Launches.FragmentLaunches;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,33 +27,26 @@ import retrofit2.Response;
 
 public class FragmentLaunchInfo extends Fragment {
     private InteractionListener interactionListener;
+    private FragmentLaunchesInfoBinding fragmentLaunchesBinding;
     public static final String LUNCHES_POSITION = "position";
-    private ImageView lunchesImage;
-    private TextView flightName, flightDetail;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         int i = getArguments().getInt(LUNCHES_POSITION);
-        lunchesImage = view.findViewById(R.id.lunches_info_big_image);
-        flightName = view.findViewById(R.id.lunches_info_flight_num);
-        flightDetail = view.findViewById(R.id.lunches_info_name);
         Call<Launch> call = LaunchApiRepository.getLaunchApi().getOneLaunch(i);
         call.enqueue(new Callback<Launch>() {
             @Override
             public void onResponse(Call<Launch> call, Response<Launch> response) {
-                generateLunchesList(response.body());
+                fragmentLaunchesBinding.setOneLaunch(response.body());
+                //fragmentLaunchesBinding.setImageUrl(response.body().getLaunchImages().getLunchesBigImageUrl());
             }
+
             @Override
             public void onFailure(Call<Launch> call, Throwable t) {
-                flightName.setText("Fail");
+                fragmentLaunchesBinding.lunchesInfoName.setText("Failed");
             }
         });
-    }
-
-    void generateLunchesList(Launch currentLaunch) {
-        Glide.with(getContext()).load(currentLaunch.getLaunchImages().getLunchesBigImageUrl()).placeholder(R.drawable.ic_launcher_background).into(lunchesImage);
-        flightName.setText(currentLaunch.getLunchesMissionName());
     }
 
     public static FragmentLaunchInfo newInstance(int lunches) {
@@ -63,7 +60,9 @@ public class FragmentLaunchInfo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_launches_info, container, false);
+        fragmentLaunchesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_launches_info,
+                container, false);
+        return fragmentLaunchesBinding.getRoot();
     }
 
     @Override
