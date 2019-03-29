@@ -1,13 +1,12 @@
 package com.example.ashimghimire.network.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.example.ashimghimire.network.R;
 import com.example.ashimghimire.network.ui.Launches.FragmentLaunches;
 import com.example.ashimghimire.network.ui.launchinfo.FragmentLaunchInfo;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LaunchActivity extends AppCompatActivity implements InteractionListener {
 

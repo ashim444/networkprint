@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.ashimghimire.network.R;
-import com.example.ashimghimire.network.databinding.FragmentLaunchesBinding;
 import com.example.ashimghimire.network.databinding.FragmentLaunchesInfoBinding;
 import com.example.ashimghimire.network.model.Launch;
 import com.example.ashimghimire.network.networking.LaunchApiRepository;
 import com.example.ashimghimire.network.ui.InteractionListener;
-import com.example.ashimghimire.network.ui.Launches.FragmentLaunches;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
