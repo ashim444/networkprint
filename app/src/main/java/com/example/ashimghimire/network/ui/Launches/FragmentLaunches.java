@@ -24,8 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragmentLaunches extends Fragment {
-    InteractionListener listener;
-    FragmentLaunchesBinding launchesBinding;
+    private InteractionListener listener;
+    private FragmentLaunchesBinding launchesBinding;
 
     public static FragmentLaunches newInstance() {
         return new FragmentLaunches();
