@@ -2,12 +2,14 @@ package com.example.ashimghimire.network.ui.Launches;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ashimghimire.network.R;
 import com.example.ashimghimire.network.databinding.FragmentLaunchesBinding;
+import com.example.ashimghimire.network.local.DatabaseRepo;
 import com.example.ashimghimire.network.model.Launch;
 import com.example.ashimghimire.network.networking.LaunchApiRepository;
 import com.example.ashimghimire.network.ui.InteractionListener;
@@ -47,35 +49,46 @@ public class FragmentLaunches extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
-        Call<List<Launch>> lunches = LaunchApiRepository.getLaunchApi().getLunches();
-        lunches.enqueue(new Callback<List<Launch>>() {
-            @Override
-            public void onResponse(Call<List<Launch>> call, Response<List<Launch>> response) {
-                if (!response.isSuccessful()) {
-                    return;
-                }
-                generateLunchesList(response.body());
-            }
+        generateLunchesList(DatabaseRepo.getInstance().getLaunchList());
 
-            @Override
-            public void onFailure(Call<List<Launch>> call, Throwable t) {
-                //TODO couter failer case
-            }
-        });
+//        Call<List<Launch>> lunches = LaunchApiRepository.getLaunchApi().getLunches();
+//        lunches.enqueue(new Callback<List<Launch>>() {
+//            @Override
+//            public void onResponse(Call<List<Launch>> call, Response<List<Launch>> response) {
+//                if (!response.isSuccessful()) {
+//                    return;
+//                }
+//                saveInDatabase(response.body());
+//                generateLunchesList(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Launch>> call, Throwable t) {
+//                //TODO couter failer case
+//            }
+//        });
     }
 
+    public void saveInDatabase( List<Launch> list) {
+//      launchList = list;
+
+
+    }
     public void generateLunchesList(final List<Launch> list) {
 //      launchList = list;
-        launchesBinding.lunchesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        LaunchAdapter adapter = new LaunchAdapter(getContext());
-        adapter.setListLaunches(list);
-        launchesBinding.lunchesRecycler.setAdapter(adapter);
-        adapter.setOnItemClickListener(new LaunchAdapter.OnItemClickListener() {
-            @Override
-            public void getClickLunches(int position) {
-                listener.navigateToDetails(list.get(position).getLunchesFlightNumber());
-            }
-        });
+        //if(list != null) {
+            launchesBinding.lunchesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            LaunchAdapter adapter = new LaunchAdapter(getContext());
+            adapter.setListLaunches(list);
+            launchesBinding.lunchesRecycler.setAdapter(adapter);
+            adapter.setOnItemClickListener(new LaunchAdapter.OnItemClickListener() {
+                @Override
+                public void getClickLunches(int position) {
+                    listener.navigateToDetails(list.get(position).getLunchesFlightNumber());
+                }
+            });
+        //}
+        //Log.v("asdasda", "asdasdasd"+ list.get(1).getLunchesMissionName());
     }
 
     @Override

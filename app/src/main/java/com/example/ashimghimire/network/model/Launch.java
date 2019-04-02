@@ -1,17 +1,38 @@
 package com.example.ashimghimire.network.model;
 
+import com.example.ashimghimire.network.local.LaunchDatabase;
 import com.google.gson.annotations.SerializedName;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
-public class Launch {
 
+@Table(database = LaunchDatabase.class)
+public class Launch extends BaseModel {
+
+    @PrimaryKey(autoincrement = true)
+    @Column
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    @Column
     @SerializedName("flight_number")
-    private int lunchesFlightNumber;
+    int lunchesFlightNumber;
 
+    @Column
     @SerializedName("mission_name")
-    private String lunchesMissionName;
+    String lunchesMissionName;
 
+
+    @Column
+    @ForeignKey(saveForeignKeyModel = true)
     @SerializedName("links")
-    private LaunchImages launchImages;
+    LaunchImages launchImages;
 
     public LaunchImages getLaunchImages() {
         return launchImages;
